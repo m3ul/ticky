@@ -1,15 +1,12 @@
-import React, { useState } from "react";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import './App.css';
 
 const App = () => {
-  const [board, setBoard] = useState(
-    Array(3)
-      .fill(null)
-      .map(() => Array(3).fill(null)),
-  );
+  const [board, setBoard] = useState(Array(3).fill(null).map(() => Array(3).fill(null)));
   const [isXNext, setIsXNext] = useState(true);
   const [moves, setMoves] = useState([]);
   const [winner, setWinner] = useState(null);
+  const [winningCells, setWinningCells] = useState([]);
 
   const handleClick = (row, col) => {
     if (winner || board[row][col]) return;
@@ -17,24 +14,24 @@ const App = () => {
     const newBoard = board.map((r, i) =>
       r.map((c, j) => {
         if (i === row && j === col) {
-          return isXNext ? "X" : "O";
+          return isXNext ? 'X' : 'O';
         }
         return c;
-      }),
+      })
     );
 
-    const newMove = { row, col, symbol: isXNext ? "X" : "O" };
+    const newMove = { row, col, symbol: isXNext ? 'X' : 'O' };
     const newMoves = [...moves, newMove];
 
-    if (newMoves.filter((move) => move.symbol === "X").length > 3) {
-      const firstXMove = newMoves.findIndex((move) => move.symbol === "X");
+    if (newMoves.filter(move => move.symbol === 'X').length > 3) {
+      const firstXMove = newMoves.findIndex(move => move.symbol === 'X');
       const { row, col } = newMoves[firstXMove];
       newBoard[row][col] = null;
       newMoves.splice(firstXMove, 1);
     }
 
-    if (newMoves.filter((move) => move.symbol === "O").length > 3) {
-      const firstOMove = newMoves.findIndex((move) => move.symbol === "O");
+    if (newMoves.filter(move => move.symbol === 'O').length > 3) {
+      const firstOMove = newMoves.findIndex(move => move.symbol === 'O');
       const { row, col } = newMoves[firstOMove];
       newBoard[row][col] = null;
       newMoves.splice(firstOMove, 1);
@@ -49,48 +46,16 @@ const App = () => {
   const checkWinner = (board) => {
     const lines = [
       // Horizontal lines
-      [
-        [0, 0],
-        [0, 1],
-        [0, 2],
-      ],
-      [
-        [1, 0],
-        [1, 1],
-        [1, 2],
-      ],
-      [
-        [2, 0],
-        [2, 1],
-        [2, 2],
-      ],
+      [[0, 0], [0, 1], [0, 2]],
+      [[1, 0], [1, 1], [1, 2]],
+      [[2, 0], [2, 1], [2, 2]],
       // Vertical lines
-      [
-        [0, 0],
-        [1, 0],
-        [2, 0],
-      ],
-      [
-        [0, 1],
-        [1, 1],
-        [2, 1],
-      ],
-      [
-        [0, 2],
-        [1, 2],
-        [2, 2],
-      ],
+      [[0, 0], [1, 0], [2, 0]],
+      [[0, 1], [1, 1], [2, 1]],
+      [[0, 2], [1, 2], [2, 2]],
       // Diagonal lines
-      [
-        [0, 0],
-        [1, 1],
-        [2, 2],
-      ],
-      [
-        [0, 2],
-        [1, 1],
-        [2, 0],
-      ],
+      [[0, 0], [1, 1], [2, 2]],
+      [[0, 2], [1, 1], [2, 0]],
     ];
 
     for (let line of lines) {
@@ -105,14 +70,15 @@ const App = () => {
         board[rowA][colA] === board[rowC][colC]
       ) {
         setWinner(board[rowA][colA]);
+        setWinningCells([a, b, c]);
         return;
       }
     }
   };
 
   const renderCell = (row, col) => {
-    const xMoves = moves.filter((move) => move.symbol === "X");
-    const oMoves = moves.filter((move) => move.symbol === "O");
+    const xMoves = moves.filter(move => move.symbol === 'X');
+    const oMoves = moves.filter(move => move.symbol === 'O');
 
     let className = "cell";
     if (xMoves.length === 3) {
@@ -126,6 +92,9 @@ const App = () => {
       if (thirdOldestO.row === row && thirdOldestO.col === col) {
         className += " highlight";
       }
+    }
+    if (winningCells.some(cell => cell[0] === row && cell[1] === col)) {
+      className += " winning";
     }
 
     return (
@@ -143,13 +112,11 @@ const App = () => {
             <div key={`${rowIndex}-${colIndex}`} className="cell-wrapper">
               {renderCell(rowIndex, colIndex)}
             </div>
-          )),
+          ))
         )}
       </div>
       {winner && <div className="winner">Winner: {winner}</div>}
-      <button className="reset" onClick={() => window.location.reload()}>
-        Reset
-      </button>
+      <button className="reset" onClick={() => window.location.reload()}>Reset</button>
     </div>
   );
 };

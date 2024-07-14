@@ -1,32 +1,36 @@
-html,
-body {
+html, body {
     height: 100%;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.game {
+    background-color: #F1FAEE; /* Light background color */
+  }
+  
+  .game {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.board {
+  }
+  
+  .board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
     gap: 5px;
-}
-
-.cell-wrapper {
+    background-color: #A8DADC; /* Light blue background for the board */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cell-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.cell {
+  }
+  
+  .cell {
     width: 100px;
     height: 100px;
     font-size: 2rem;
@@ -34,20 +38,48 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
-
-.highlight {
-    opacity: 0.5;
-}
-
-.winner {
+    background-color: #457B9D; /* Medium blue background for cells */
+    color: #F1FAEE; /* Light color for text */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+  }
+  
+  .cell:hover {
+    background-color: #1D3557; /* Dark blue background on hover */
+  }
+  
+  .highlight {
+    background-color: #E63946; /* Red background for highlighted cells */
+    color: #F1FAEE; /* Light color for text */
+  }
+  
+  .winning {
+    background-color: #8BC34A; /* Green background for winning cells */
+    color: #F1FAEE; /* Light color for text */
+  }
+  
+  .winner {
     margin-top: 20px;
     font-size: 1.5rem;
-}
-
-.reset {
+    color: #1D3557; /* Dark blue color for winner text */
+  }
+  
+  .reset {
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
-}
+    background-color: #457B9D; /* Medium blue background for button */
+    color: #F1FAEE; /* Light color for button text */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+  }
+  
+  .reset:hover {
+    background-color: #1D3557; /* Dark blue background on hover */
+  }
+  
