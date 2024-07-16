@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import './Ticky.css';
 
-const App = () => {
+const Ticky = () => {
   const [board, setBoard] = useState(Array(3).fill(null).map(() => Array(3).fill(null)));
   const [isXNext, setIsXNext] = useState(true);
   const [moves, setMoves] = useState([]);
@@ -121,4 +121,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Ticky;
