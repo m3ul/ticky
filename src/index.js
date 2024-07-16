@@ -7,7 +7,7 @@ import Undercover from "./components/Undercover";
 import "./index.css";
 
 ReactDOM.render(
-  <Router>
+  <Router basename="/ticky">
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/ticky" element={<Ticky />} />
